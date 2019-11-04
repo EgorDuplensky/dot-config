@@ -1,0 +1,9 @@
+git:
+  depth: 1
+  quite: true
+
+matrix:
+  include:
+    - language shell
+      bash: 4.3
+      script: shellcheck bashrc
