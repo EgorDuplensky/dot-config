@@ -1,0 +1,26 @@
+[core]
+    excludesfile = ~/.gitignore
+    editor = emacsclient
+    pager = less -FXR
+    askPass =
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+    interactive = auto
+    log = auto
+[alias]
+    amend = commit -a --amend --date=now -C HEAD
+
+[color "show"]
+    tag = red
+[diff]
+    tool = kdiff3
+[merge]
+    tool = kdiff3
+[difftool]
+    prompt = false
+[credential]
+    helper = store
+[github]
+    user = FalyPr1nc3
