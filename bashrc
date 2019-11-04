@@ -9,7 +9,7 @@
 done
 
 # git branch in prompt
-[ -f ~/.config/bash/prompt/prompt.sh ] && source ~/.config/bash/prompt/prompt.sh
+[ -f ~/.config/bash/bash_prompt ] && source ~/.config/bash/bash_prompt
 # custom functions
 [ -f ~/.config/bash/functions.sh ] && source ~/.config/bash/functions.sh
 
