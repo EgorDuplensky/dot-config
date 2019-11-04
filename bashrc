@@ -19,19 +19,18 @@ HISTFILESIZE=
 # avoid duplication in bash history
 export HISTCONTROL='ignoreboth:erasedups'
 # ensure utf8
-export LANG=en_US.utf8
-export LC_TIME=en_US.utf8
-export LC_COLLATE=en_US.utf8
-export LC_MESSAGES=en_US.utf8
-export LC_ALL=en_US.utf8
-export LANGUAGE=en_US.utf8
+export LANG=en_US.UTF-8
+export LC_TIME=en_US.UTF-8
+export LC_COLLATE=en_US.UTF-8
+export LC_MESSAGES=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
 
 export EDITOR="emacsclient --no-wait"
 export VISUAL="emacsclient"
 
 # hide dwm name from jvm. Otherwise jwm complains about window manager
 # and refuses to run from dwm.
-wmname LG3D
+if command -v wmname; then wmname LG3D; fi
 
 # less/man colors
 export LESS=-R
