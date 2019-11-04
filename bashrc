@@ -1,0 +1,71 @@
+# source environment specific configuration first
+[ -f ~/.config/bash/.bashrc_host_specific ] && source ~/.config/bash/.bashrc_host_specific
+
+# enter the context
+[ -f ~/.config/bash/.context ] && source ~/.config/bash/.context
+
+[ -d /home/xegodup/.config/bash/bash_completion.d ] && for f in /home/xegodup/.config/bash/bash_completion.d/*; do
+    source ${f}
+done
+
+# git branch in prompt
+[ -f ~/.config/bash/prompt/prompt.sh ] && source ~/.config/bash/prompt/prompt.sh
+# custom functions
+[ -f ~/.config/bash/functions.sh ] && source ~/.config/bash/functions.sh
+
+# unlimited history
+HISTSIZE=
+HISTFILESIZE=
+# avoid duplication in bash history
+export HISTCONTROL='ignoreboth:erasedups'
+# ensure utf8
+export LANG=en_US.utf8
+export LC_TIME=en_US.utf8
+export LC_COLLATE=en_US.utf8
+export LC_MESSAGES=en_US.utf8
+export LC_ALL=en_US.utf8
+export LANGUAGE=en_US.utf8
+
+export EDITOR="emacsclient --no-wait"
+export VISUAL="emacsclient"
+
+# hide dwm name from jvm. Otherwise jwm complains about window manager
+# and refuses to run from dwm.
+wmname LG3D
+
+# less/man colors
+export LESS=-R
+export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"; a="${a%_}"
+export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"; a="${a%_}"
+export LESS_TERMCAP_me="$(printf '%b' '[0m')"; a="${a%_}"
+export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"; a="${a%_}"
+export LESS_TERMCAP_se="$(printf '%b' '[0m')"; a="${a%_}"
+export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"; a="${a%_}"
+export LESS_TERMCAP_ue="$(printf '%b' '[0m')"; a="${a%_}"
+
+# emacs26 need
+export ALTERNATE_EDITOR=""
+
+# to prevent any ugly gui popup
+export SSH_ASKPASS=""
+
+# common aliases
+alias grep="grep --color=auto"
+alias ll='ls -lah --color --group-directories-first'
+alias ls='ls --color --group-directories-first'
+alias ec='emacsclient --no-wait'
+alias sudoec='SUDO_EDITOR=emacsclient sudoedit'
+alias cls='printf "\033c"; stty sane'
+
+# f1 for git status
+bind '"\eOP":"git status\n"'
+
+[ -d ~/.config/bash/bash_aliases.d ] && for f in ~/.config/bash/bash_aliases.d/*; do
+    source ${f}
+done
+
+# Fuzzy matching (fzf)
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --no-mouse --inline-info'
+
+# this is a secret
+[ -f ~/.config/bash/.bash_secret ] && source ~/.config/bash/.bash_secret
