@@ -9,7 +9,7 @@
 done
 
 # git branch in prompt
-[ -f ~/.config/bash/prompt/prompt.sh ] && source ~/.config/bash/prompt/prompt.sh
+[ -f ~/.config/bash/bash_prompt ] && source ~/.config/bash/bash_prompt
 # custom functions
 [ -f ~/.config/bash/functions.sh ] && source ~/.config/bash/functions.sh
 
@@ -19,19 +19,18 @@ HISTFILESIZE=
 # avoid duplication in bash history
 export HISTCONTROL='ignoreboth:erasedups'
 # ensure utf8
-export LANG=en_US.utf8
-export LC_TIME=en_US.utf8
-export LC_COLLATE=en_US.utf8
-export LC_MESSAGES=en_US.utf8
-export LC_ALL=en_US.utf8
-export LANGUAGE=en_US.utf8
+export LANG=en_US.UTF-8
+export LC_TIME=en_US.UTF-8
+export LC_COLLATE=en_US.UTF-8
+export LC_MESSAGES=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
 
 export EDITOR="emacsclient --no-wait"
 export VISUAL="emacsclient"
 
 # hide dwm name from jvm. Otherwise jwm complains about window manager
 # and refuses to run from dwm.
-wmname LG3D
+if command -v wmname; then wmname LG3D; fi
 
 # less/man colors
 export LESS=-R
@@ -54,8 +53,11 @@ alias grep="grep --color=auto"
 alias ll='ls -lah --color --group-directories-first'
 alias ls='ls --color --group-directories-first'
 alias ec='emacsclient --no-wait'
+alias et='emacsclient -t'
 alias sudoec='SUDO_EDITOR=emacsclient sudoedit'
 alias cls='printf "\033c"; stty sane'
+alias pronounce='trans -speak -no-translate -j'
+alias translate='trans -d -v :ru -j'
 
 # f1 for git status
 bind '"\eOP":"git status\n"'
@@ -64,8 +66,7 @@ bind '"\eOP":"git status\n"'
     source ${f}
 done
 
-# Fuzzy matching (fzf)
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --no-mouse --inline-info'
-
+# fzf configuration
+[ -f ~/.config/bash/fzf.bash ] && source ~/.config/bash/fzf.bash
 # this is a secret
 [ -f ~/.config/bash/.bash_secret ] && source ~/.config/bash/.bash_secret
