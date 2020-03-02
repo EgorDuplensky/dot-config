@@ -66,8 +66,7 @@ bind '"\eOP":"git status\n"'
     source ${f}
 done
 
-# Fuzzy matching (fzf)
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --no-mouse --inline-info'
-
+# fzf configuration
+[ -f ~/.config/bash/fzf.bash ] && source ~/.config/bash/fzf.bash
 # this is a secret
 [ -f ~/.config/bash/.bash_secret ] && source ~/.config/bash/.bash_secret
