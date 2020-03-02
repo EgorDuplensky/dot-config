@@ -53,8 +53,11 @@ alias grep="grep --color=auto"
 alias ll='ls -lah --color --group-directories-first'
 alias ls='ls --color --group-directories-first'
 alias ec='emacsclient --no-wait'
+alias et='emacsclient -t'
 alias sudoec='SUDO_EDITOR=emacsclient sudoedit'
 alias cls='printf "\033c"; stty sane'
+alias pronounce='trans -speak -no-translate -j'
+alias translate='trans -d -v :ru -j'
 
 # f1 for git status
 bind '"\eOP":"git status\n"'
