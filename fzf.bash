@@ -9,6 +9,37 @@ fcd-git() {
     cd $(find ~/ -name '*.git' -type d | sed -r 's/\.git//' | fzf)
 }
 
+# fstart - start systemd unit
+fstart() {
+  unit=$(systemctl list-unit-files | grep disabled |
+    awk '{print $1}' | grep service | fzf)
+  [ -n "$unit" ] && sudo systemctl start $unit &&
+    journalctl -u $unit --since "10 sec ago" --no-pager
+}
+
+# fstop - stop systemd unit
+fstop() {
+  unit=$(systemctl list-units | grep running |
+    awk '{print $1}' | grep service | fzf)
+  [ -n "$unit" ] && sudo systemctl stop $unit &&
+    journalctl -u $unit --since "10 sec ago" --no-pager
+}
+
+# finstall - install new package
+finstall() {
+  package=$(pacman -Ssq | fzf)
+  if [ -n "$package" ]; then
+    pacman -Ss "^$package$"
+    sudo pacman -S $package
+  fi
+}
+
+# fdelete - completely uninstall package
+fdelete() {
+  package=$(pacman -Qqe | fzf)
+  [ -n "$package" ] && sudo pacman -Rscn $package
+}
+
 # complete gdp batch stack print in fzf kill manner
 complete -F _fzf_complete_kill -o nospace -o default -o bashdefault gstack-gdb
 
