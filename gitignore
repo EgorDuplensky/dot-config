@@ -1,2 +1,6 @@
 # generated files
 *.log
+# emacs stuff
+GPATH
+GRTAGS
+GTAGS
