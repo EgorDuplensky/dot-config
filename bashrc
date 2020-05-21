@@ -28,6 +28,7 @@ export LANGUAGE=en_US.UTF-8
 export EDITOR="emacsclient --no-wait"
 export VISUAL="emacsclient"
 
+export GOPATH=$HOME/go
 # hide dwm name from jvm. Otherwise jwm complains about window manager
 # and refuses to run from dwm.
 if command -v wmname; then wmname LG3D; fi
