@@ -1,3 +1,6 @@
+[user]
+	email = egor.duplensky@gmail.com
+	name = Egor Duplensky
 [core]
     excludesfile = ~/.gitignore
     editor = emacsclient
