@@ -4,7 +4,7 @@
 # enter the context
 [ -f ~/.config/bash/.context ] && source ~/.config/bash/.context
 
-[ -d /home/xegodup/.config/bash/bash_completion.d ] && for f in /home/xegodup/.config/bash/bash_completion.d/*; do
+[ -d ~/.config/bash/bash_completion.d ] && for f in ~/.config/bash/bash_completion.d/*; do
     source ${f}
 done
 
