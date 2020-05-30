@@ -55,6 +55,8 @@ bind -x '"\e[Z": fzf_bash_completion'
     source ~/.local/opt/fzf-marks/fzf-marks.plugin.bash
 
 # z (most frequently  used direcotries)
-source /usr/share/z/z.sh
-# fz
-[ -f ~/.config/bash/zfz.sh ] && source ~/.config/bash/zfz.sh
+[ -f /usr/share/z/z.sh ] && \
+    source /usr/share/z/z.sh
+# fzf power for z
+[ -f ~/.config/bash/z.sh ] && \
+    source ~/.config/bash/z.sh
