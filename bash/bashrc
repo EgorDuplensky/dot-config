@@ -18,6 +18,7 @@ HISTSIZE=
 HISTFILESIZE=
 # avoid duplication in bash history
 export HISTCONTROL='ignoreboth:erasedups'
+shopt -s histappend
 # ensure utf8
 export LANG=en_US.UTF-8
 export LC_TIME=en_US.UTF-8
