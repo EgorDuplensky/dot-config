@@ -1,43 +1,30 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1090
+
 [ -d /usr/share/fzf ] && for f in /usr/share/fzf/*.bash; do
-    source ${f}
+    source "${f}"
 done
 # Fuzzy matching (fzf)
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --no-mouse --info=hidden'
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --no-mouse --info=hidden --color='fg+:#ffffff,fg:#A5A6A5,hl:#ffffff,hl+:#ffffff,pointer:#ffffff,prompt:#ffffff,gutter:#3f3f3f' --prompt='' --pointer=' '"
+export FZF_ALT_C_OPTS="--preview 'ls -a --color {}' --color='preview-fg:#ffffff' --preview-window=right:70%"
 
 # fuzzy enter git repo in home
 fcd-git() {
-    cd $(find ~/ -name '*.git' -type d | sed -r 's/\.git//' | fzf)
+    cd "$(find ~/ -name '*.git' -type d | sed -r 's/\\.git//' | fzf)"  || exit
 }
 
-# fstart - start systemd unit
-fstart() {
-  unit=$(systemctl list-unit-files | grep disabled |
-    awk '{print $1}' | grep service | fzf)
-  [ -n "$unit" ] && sudo systemctl start $unit &&
-    journalctl -u $unit --since "10 sec ago" --no-pager
-}
-
-# fstop - stop systemd unit
-fstop() {
-  unit=$(systemctl list-units | grep running |
-    awk '{print $1}' | grep service | fzf)
-  [ -n "$unit" ] && sudo systemctl stop $unit &&
-    journalctl -u $unit --since "10 sec ago" --no-pager
-}
-
-# finstall - install new package
-finstall() {
-  package=$(pacman -Ssq | fzf)
-  if [ -n "$package" ]; then
-    pacman -Ss "^$package$"
-    sudo pacman -S $package
-  fi
-}
-
-# fdelete - completely uninstall package
-fdelete() {
-  package=$(pacman -Qqe | fzf)
-  [ -n "$package" ] && sudo pacman -Rscn $package
+fsystemctl() {
+  local unit
+  unit=$(systemctl list-unit-files |
+    awk '{print $1}' |
+    grep service |
+    fzf --preview 'PAGER=cat systemctl --user status {}' \
+        --bind "ctrl-s:execute(systemctl --user start {})" \
+        --bind "ctrl-k:execute(systemctl --user stop {})" \
+        --bind "ctrl-u:reload($(systemctl --user list-unit-files | awk '{print $1}' | grep service)")
+  [ -n "$unit" ] && sudo systemctl --user stop "$unit" &&
+      journalctl -u "$unit" --since "10 sec ago" --no-pager
 }
 
 # complete gdp batch stack print in fzf kill manner
@@ -60,3 +47,4 @@ bind -x '"\e[Z": fzf_bash_completion'
 # fzf power for z
 [ -f ~/.config/bash/z.sh ] && \
     source ~/.config/bash/z.sh
+
