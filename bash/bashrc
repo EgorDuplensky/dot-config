@@ -1,11 +1,13 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC1090,SC2155
 # source environment specific configuration first
-[ -f ~/.config/bash/.bashrc_host_specific ] && source ~/.config/bash/.bashrc_host_specific
+[ -f ~/.config/bash/.bashrc_host_specific ] && . ~/.config/bash/.bashrc_host_specific
 
 # enter the context
 [ -f ~/.config/bash/.context ] && source ~/.config/bash/.context
 
 [ -d ~/.config/bash/bash_completion.d ] && for f in ~/.config/bash/bash_completion.d/*; do
-    source ${f}
+    source "${f}"
 done
 
 # git branch in prompt
@@ -32,7 +34,7 @@ export VISUAL="emacsclient"
 export GOPATH=$HOME/go
 # hide dwm name from jvm. Otherwise jwm complains about window manager
 # and refuses to run from dwm.
-if command -v wmname; then wmname LG3D; fi
+if command -v wmname > /dev/null; then wmname LG3D; fi
 
 # less/man colors
 export LESS=-R
@@ -60,15 +62,18 @@ alias sudoec='SUDO_EDITOR=emacsclient sudoedit'
 alias cls='printf "\033c"; stty sane'
 alias pronounce='trans -speak -no-translate -j'
 alias translate='trans -d -v :ru -j'
+alias google-chrome='chromium'
 
 # f1 for git status
 bind '"\eOP":"git status\n"'
 
 [ -d ~/.config/bash/bash_aliases.d ] && for f in ~/.config/bash/bash_aliases.d/*; do
-    source ${f}
+    source "${f}"
 done
 
 # fzf configuration
 [ -f ~/.config/bash/fzf.bash ] && source ~/.config/bash/fzf.bash
 # this is a secret
 [ -f ~/.config/bash/.bash_secret ] && source ~/.config/bash/.bash_secret
+# fzf-style bash completion
+[ -f ~/git/fzf-obc/bin/fzf-obc.bash ] && source ~/git/fzf-obc/bin/fzf-obc.bash
