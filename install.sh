@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-./check-dependencies.sh
+# ./check-dependencies.sh
 
 # setup Xorg
 rm -f $HOME/.xprofile
@@ -11,8 +11,14 @@ rm -f $HOME/.xsession
 ln -sf $PWD/xorg/xsession $HOME/.xsession
 rm -f $HOME/.profile
 ln -sf $PWD/profile $HOME/.profile
+mkdir -p $HOME/.config/xorg
+ln -sf $PWD/xorg/start.sh $HOME/.config/xorg/start.sh
 
-# setup Bash
+# picom
+mkdir -p $HOME/.config/picom
+ln -sf $PWD/picom/picom.conf $HOME/.config/picom/picom.conf
+
+# Setup Bash
 mkdir -p $HOME/.config/bash
 rm -f $HOME/.bashrc
 ln -sf $PWD/bash/bashrc $HOME/.bashrc
@@ -22,14 +28,14 @@ rm -f $HOME/.config/bash/bash_prompt
 ln -sf $PWD/bash/bash_prompt $HOME/.config/bash/bash_prompt
 rm -f $HOME/.config/bash/fzf.bash
 ln -sf $PWD/bash/fzf.bash $HOME/.config/bash/fzf.bash
-rm -f $HOME/.config/bash/z.sh
-ln -sf $PWD/bash/z.sh $HOME/.config/bash/z.sh
+rm -f $HOME/.config/bash/fasd.bash
+ln -sf $PWD/bash/fasd.bash $HOME/.config/bash/fasd.bash
 
 # setup Git
 mkdir -p $HOME/.config/git
 rm -f $HOME/.config/git/ignore
 ln -sf $PWD/git/ignore $HOME/.config/git/ignore
-rm -f $PWD/git/config $HOME/.config/git/config
+rm -f $HOME/.config/git/config
 ln -sf $PWD/git/config $HOME/.config/git/config
 
 # setup Sustemd
@@ -39,5 +45,5 @@ ln -sf $PWD/systemd/emacs.service $HOME/.config/systemd/user/emacs.service
 rm -f $HOME/.config/systemd/user/slstatus.service
 ln -sf $PWD/systemd/slstatus.service $HOME/.config/systemd/user/slstatus.service
 
-# setup custom scripts
+# # setup custom scripts
 ln -sf $PWD/scripts $HOME/.scripts

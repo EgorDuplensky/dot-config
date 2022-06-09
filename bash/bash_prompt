@@ -26,25 +26,35 @@ my_prompt_cmd() {
     local branch
     if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
         if [[ "$branch" == "HEAD" ]]; then
-            branch='detached*'
+            if tag=$(git describe --tag --exact-match 2> /dev/null); then
+                colored_git_rev="${Yel}[${tag}]${RESET}"
+            else
+                colored_git_rev="${Red}[$(git rev-parse --short HEAD)]${RESET}"
+            fi
+        else
+            colored_git_rev="${Gre}[${branch}]${RESET}"
         fi
-        colored_git_branch="${Gre}[${branch}]${RESET}"
     else
-        colored_git_branch=''
+        colored_git_rev=''
     fi
 
     local module
     module=$(git config --local remote.origin.url  2>/dev/null | awk -F "/" '{print $NF}')
 
     if module=$(git config --local remote.origin.url  2>/dev/null | awk -F "/" '{print $NF}'); then
-        colored_module="${Cya}${module}${RESET}"
+        colored_repo="${Cya}${module}${RESET}"
     else
-        colored_module=''
+        colored_repo=''
     fi
 
-    PS1=$"${ts_prompt}${colored_module}${colored_git_branch}"
+    PS1=$"${ts_prompt}${colored_repo}${colored_git_rev}"
     PS1+=$"${Whi}"
-    PS1+=$'\u1427 '
+
+    if [ -z "$SSH_TTY" ]; then
+        PS1+=$'\u1427 '
+    else
+        PS1+=$'\U1f5A5 '
+    fi
     PS1+=$"${RESET}\W"
 
     if [ $EXIT == 0 ]; then

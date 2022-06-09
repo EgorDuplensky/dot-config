@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 function show_git_info {
     local dir_format='%-70s'
     local git_info
@@ -16,24 +15,17 @@ function show_git_info {
 }
 
 export -f show_git_info
-# fz
-unalias z
-function z() {
-  if [[ -z "$*" ]]; then
-      local dir
-      dir="$(_z -l 2>&1 | fzf +s --tac | sed 's/^[0-9,.]* *//')"
-      # dir="$(_z -l 2>&1 | awk '{print $2}' | xargs -I{} bash -c 'show_git_info {}' | fzf --ansi --nth=1 --tac --no-sort | awk '{print $1}')"
-      printf 'cd %q' "$dir"
-  else
-    _last_z_args="$*"
-    _z "$*"
-  fi
-}
 
-function zz() {
-  cd "$(_z -l 2>&1 | sed 's/^[0-9,.]* *//' | fzf -q "$_last_z_args")" || return
+mkdir -p ~/.cache/fasd
+eval "$(fasd --init auto)"
+export _FASD_DATA=$HOME/.cache/fasd/.fasd
+
+function fasd_fzf() {
+    local dir
+    dir="$(fasd -sdR 2>&1 | fzf +s | sed 's/^[0-9,.]* *//')"
+    printf 'cd %q' "$dir"
 }
 
 # Bind to Alt-z
 # shellcheck disable=SC2016
-bind -m emacs-standard '"\ez": " \C-b\C-k \C-u $(z) \e\C-e\er\C-m\C-y\C-h\e \C-y\ey\C-x\C-x\C-d"'
+bind -m emacs-standard '"\ez": " \C-b\C-k \C-u $(fasd_fzf) \e\C-e\er\C-m\C-y\C-h\e \C-y\ey\C-x\C-x\C-d"'

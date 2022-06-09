@@ -2,5 +2,5 @@
 Encoding=UTF-8
 Name=Dynamic Window Manager
 Comment=Runs the window manager defined by xsession script
-Exec=/home/egord/.config/xorg/start.sh
+Exec=/home/egor/.config/xorg/start.sh
 Type=Application

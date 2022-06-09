@@ -1,6 +1,47 @@
-# generated files
+ # generated files
 *.log
+graph.xml
+graph.bin
+tmp/
+models/
+irs/
 # emacs stuff
 GPATH
 GRTAGS
 GTAGS
+.dir-locals.el
+*.~undo-tree~
+# cscope
+cscope.files
+cscope.out
+# clang
+compile_commands*.json*
+.clangd
+.clang-format
+.clang-tidy
+# gcov
+*.gcno
+*.gcda
+*.gcov.*
+*.cpp.*.html
+*.h.*.html
+*.hpp.*.html
+*.perf-folded
+perf.data*
+coverage.info
+# perf
+.debug
+.cache
+# vtune
+r*hs
+# valgrind massif
+massif.out.*
+# openvino
+/*.xml
+/*.bin
+/*.sh
+/*.csv
+/*.svg
+/build*
+/mkldnn_dump*
+/Dockerfile*

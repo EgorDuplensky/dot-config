@@ -1,13 +1,14 @@
 [user]
-	email = egor.duplensky@gmail.com
 	name = Egor Duplensky
+	email = egor.duplensky@gmail.com
 [github]
     user = EgorDuplensky
+[gitlab]
+    user = eduplens
 [credential]
     helper = store
 [core]
     askPass =
-    excludesfile = ~/.gitignore
     editor = emacsclient
     pager = less -FXR
 [color]
@@ -26,3 +27,12 @@
     tool = kdiff3
 [difftool]
     prompt = false
+[submodule]
+	recurse = true
+[pull]
+	rebase = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

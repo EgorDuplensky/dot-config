@@ -1,20 +1,32 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090,SC2155
 # source environment specific configuration first
-[ -f ~/.config/bash/.bashrc_host_specific ] && . ~/.config/bash/.bashrc_host_specific
+[ -f "$HOME/.config/bash/.bashrc_host_specific" ] && . "$HOME/.config/bash/.bashrc_host_specific"
 
 # enter the context
-[ -f ~/.config/bash/.context ] && source ~/.config/bash/.context
+[ -f "$HOME/.config/bash/.context" ] && source "$HOME/.config/bash/.context"
 
-[ -d ~/.config/bash/bash_completion.d ] && for f in ~/.config/bash/bash_completion.d/*; do
+if [[ ! "$PATH" == ${HOME}/.local/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}${HOME}/.local/bin"
+fi
+
+if [[ ! "$PATH" == *${HOME}/.scripts* ]]; then
+  export PATH="${PATH:+${PATH}:}${HOME}/.scripts"
+fi
+
+shopt -s direxpand
+
+[ -f /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
+
+[ -d "$HOME/.config/bash/bash_completion.d" ] && for f in "$HOME/.config/bash/bash_completion.d/"*; do
     source "${f}"
 done
 
-# git branch in prompt
-[ -f ~/.config/bash/bash_prompt ] && source ~/.config/bash/bash_prompt
 # custom functions
-[ -f ~/.config/bash/functions.sh ] && source ~/.config/bash/functions.sh
+[ -f "$HOME/.config/bash/functions.sh" ] && source "$HOME/.config/bash/functions.sh"
 
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
 # unlimited history
 HISTSIZE=
 HISTFILESIZE=
@@ -45,6 +57,7 @@ export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"; a="${a%_}"
 export LESS_TERMCAP_se="$(printf '%b' '[0m')"; a="${a%_}"
 export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"; a="${a%_}"
 export LESS_TERMCAP_ue="$(printf '%b' '[0m')"; a="${a%_}"
+[ -f "$HOME/.dircolors" ] && eval "$(dircolors $HOME/.dircolors)"
 
 # emacs26 need
 export ALTERNATE_EDITOR=""
@@ -56,24 +69,42 @@ export SSH_ASKPASS=""
 alias grep="grep --color=auto"
 alias ll='ls -lah --color --group-directories-first'
 alias ls='ls --color --group-directories-first'
-alias ec='emacsclient --no-wait'
-alias et='emacsclient -t'
-alias sudoec='SUDO_EDITOR=emacsclient sudoedit'
+alias ec='/usr/local/bin/emacsclient --no-wait'
+alias et='/usr/local/bin/emacsclient -t'
+alias sudoec='SUDO_EDITOR=/usr/local/bin/emacsclient sudoedit'
 alias cls='printf "\033c"; stty sane'
 alias pronounce='trans -speak -no-translate -j'
 alias translate='trans -d -v :ru -j'
-alias google-chrome='chromium'
+alias google-chrome='google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode'
+alias file-explorer='xdg-open /'
+
+if command -v fdfind > /dev/null; then alias fd='fdfind'; fi
 
 # f1 for git status
 bind '"\eOP":"git status\n"'
+# Bind undo to just C-u instead of C-x C-u
+stty kill undef
+bind '"\C-u":undo'
 
-[ -d ~/.config/bash/bash_aliases.d ] && for f in ~/.config/bash/bash_aliases.d/*; do
+[ -d "$HOME/.config/bash/bash_aliases.d" ] && for f in "$HOME/.config/bash/bash_aliases.d/"*; do
     source "${f}"
 done
 
 # fzf configuration
-[ -f ~/.config/bash/fzf.bash ] && source ~/.config/bash/fzf.bash
+[ -f "$HOME/.config/bash/fzf.bash" ] && source "$HOME/.config/bash/fzf.bash"
 # this is a secret
-[ -f ~/.config/bash/.bash_secret ] && source ~/.config/bash/.bash_secret
+[ -f "$HOME/.config/bash/.bash_secret" ] && source "$HOME/.config/bash/.bash_secret"
 # fzf-style bash completion
-[ -f ~/git/fzf-obc/bin/fzf-obc.bash ] && source ~/git/fzf-obc/bin/fzf-obc.bash
+[ -f "$HOME/git/fzf-obc/bin/fzf-obc.bash" ] && source "$HOME/git/fzf-obc/bin/fzf-obc.bash"
+# fzf-fasd configuration
+[ -f "$HOME/.config/bash/fasd.bash" ] && source "$HOME/.config/bash/fasd.bash"
+# git branch in prompt (Should be sources last to have proper error status)
+[ -f "$HOME/.config/bash/bash_prompt" ] && source "$HOME/.config/bash/bash_prompt"
+
+if [[ "$TERM" == "dumb" ]]; then
+    PS1="> "
+    PROMPT_COMMAND=""
+fi
+
+[ -f "$HOME/.bash_aliases" ] && . "$HOME/.bash_aliases"
+[ -f "$HOME/.bashrc_work" ] && . "$HOME/.bashrc_work"

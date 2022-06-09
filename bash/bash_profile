@@ -2,7 +2,8 @@
 
 # shellcheck disable=SC1090
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+[ -d $HOME/.scripts ] && PATH="$PATH:$HOME/.scripts"
+[ -d $HOME/.local/bin ] && PATH="$PATH:$HOME/.local/bin"
 
 if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
     exec startx

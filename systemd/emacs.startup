@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+source /etc/profile
+/usr/bin/emacs --daemon

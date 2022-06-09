@@ -2,11 +2,18 @@
 
 # shellcheck disable=SC1090
 
+[ -f ~/.config/fzf/fzf.bash ] && source ~/.config/fzf/fzf.bash
+
 [ -d /usr/share/fzf ] && for f in /usr/share/fzf/*.bash; do
     source "${f}"
 done
+
+[ -d /usr/share/doc/fzf/examples ] && for f in /usr/share/doc/fzf/examples/*.bash; do
+    source "${f}"
+done
+
 # Fuzzy matching (fzf)
-export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --no-mouse --info=hidden --color='fg+:#ffffff,fg:#A5A6A5,hl:#ffffff,hl+:#ffffff,pointer:#ffffff,prompt:#ffffff,gutter:#3f3f3f' --prompt='' --pointer=' '"
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --no-mouse --info=hidden --color='fg+:#ffffff,fg:#A5A6A5,hl:#ffffff,hl+:#ffffff,pointer:#ffffff,prompt:#ffffff,gutter:#3f3f3f' --prompt=''"
 export FZF_ALT_C_OPTS="--preview 'ls -a --color {}' --color='preview-fg:#ffffff' --preview-window=right:70%"
 
 # fuzzy enter git repo in home
@@ -41,9 +48,6 @@ bind -x '"\e[Z": fzf_bash_completion'
 [ -f ~/.local/opt/fzf-marks/fzf-marks.plugin.bash ] && \
     source ~/.local/opt/fzf-marks/fzf-marks.plugin.bash
 
-# z (most frequently  used direcotries)
-[ -f /usr/share/z/z.sh ] && \
-    source /usr/share/z/z.sh
 # fzf power for z
 [ -f ~/.config/bash/z.sh ] && \
     source ~/.config/bash/z.sh
