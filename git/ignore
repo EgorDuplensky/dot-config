@@ -5,6 +5,7 @@ graph.bin
 tmp/
 models/
 irs/
+.build_tmp
 # emacs stuff
 GPATH
 GRTAGS
@@ -37,11 +38,17 @@ r*hs
 # valgrind massif
 massif.out.*
 # openvino
-/*.xml
-/*.bin
-/*.sh
-/*.csv
-/*.svg
-/build*
-/mkldnn_dump*
-/Dockerfile*
+./*.xml
+./*.bin
+./*.sh
+./*.csv
+./*.svg
+build_*
+build/
+cpu_dump*
+./Dockerfile*
+# tmp
+.clang_tidy
+.dockerignore
+# tmp
+launch.json

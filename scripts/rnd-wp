@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-ls -d $HOME/misc/pictures/wallpapers/* | sort -R | head -1 | xargs feh --bg-scale
+ls -d $HOME/pictures/wallpapers/* | sort -R | head -1 | xargs feh --bg-scale

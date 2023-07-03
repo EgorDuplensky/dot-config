@@ -31,7 +31,7 @@ export XDG_RUNTIME_DIR=/run/user/$(id -u)
 HISTSIZE=
 HISTFILESIZE=
 # avoid duplication in bash history
-export HISTCONTROL='ignoreboth:erasedups'
+export HISTCONTROL='ignoreboth'
 shopt -s histappend
 # ensure utf8
 export LANG=en_US.UTF-8
@@ -91,11 +91,11 @@ bind '"\C-u":undo'
 done
 
 # fzf configuration
+#[ -f "$HOME/git/ble.sh/out/ble.sh" ] && source "$HOME/git/ble.sh/out/ble.sh"
+# fzf configuration
 [ -f "$HOME/.config/bash/fzf.bash" ] && source "$HOME/.config/bash/fzf.bash"
 # this is a secret
 [ -f "$HOME/.config/bash/.bash_secret" ] && source "$HOME/.config/bash/.bash_secret"
-# fzf-style bash completion
-[ -f "$HOME/git/fzf-obc/bin/fzf-obc.bash" ] && source "$HOME/git/fzf-obc/bin/fzf-obc.bash"
 # fzf-fasd configuration
 [ -f "$HOME/.config/bash/fasd.bash" ] && source "$HOME/.config/bash/fasd.bash"
 # git branch in prompt (Should be sources last to have proper error status)

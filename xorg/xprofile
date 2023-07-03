@@ -1,4 +1,10 @@
 [ -d $HOME/.scripts ] && PATH="$PATH:$HOME/.scripts"
 [ -d $HOME/.local/bin ] && PATH="$PATH:$HOME/.local/bin"
 
-
+. "$HOME/.profile"
+# status bar
+if command -v slstatus > /dev/null; then slstatus & fi
+# set random wallpapers
+if command -v rnd-wp > /dev/null; then rnd-wp; fi
+# composite manager
+if command -v picom > /dev/null; then picom -b; fi

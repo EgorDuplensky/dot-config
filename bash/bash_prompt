@@ -53,17 +53,21 @@ my_prompt_cmd() {
     if [ -z "$SSH_TTY" ]; then
         PS1+=$'\u1427 '
     else
-        PS1+=$'\U1f5A5 '
+        # PS1+=$'\U1f5A5 '
+        PS1+=$' '
     fi
+
     PS1+=$"${RESET}\W"
 
     if [ $EXIT == 0 ]; then
         PS1+=$"${Gre}"
-        PS1+=$'\u2714 '
+        # PS1+=$'\u2714 '
+        PS1+=$'> '
         PS1+=$"${RESET}"
     else
         PS1+=$"${BIRed}"
-        PS1+=$'\u2613 '
+        # PS1+=$'\u2613 '
+        PS1+=$'> '
         PS1+=$"${RESET}"
     fi
 

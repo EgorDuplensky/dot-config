@@ -2,8 +2,6 @@
 
 # shellcheck disable=SC1090
 
-[ -f ~/.config/fzf/fzf.bash ] && source ~/.config/fzf/fzf.bash
-
 [ -d /usr/share/fzf ] && for f in /usr/share/fzf/*.bash; do
     source "${f}"
 done
@@ -36,19 +34,3 @@ fsystemctl() {
 
 # complete gdp batch stack print in fzf kill manner
 complete -F _fzf_complete_kill -o nospace -o default -o bashdefault gstack-gdb
-
-#Bash completion with fzf
-[ -f ~/.local/opt/fzf-tab-completion/bash/fzf-bash-completion.sh ] && \
-    source ~/.local/opt/fzf-tab-completion/bash/fzf-bash-completion.sh
-
-# Shift-Tab fuzzy completion for command arguments
-bind -x '"\e[Z": fzf_bash_completion'
-
-# mark directory with 'mark' and enter with 'Ctrl-g'
-[ -f ~/.local/opt/fzf-marks/fzf-marks.plugin.bash ] && \
-    source ~/.local/opt/fzf-marks/fzf-marks.plugin.bash
-
-# fzf power for z
-[ -f ~/.config/bash/z.sh ] && \
-    source ~/.config/bash/z.sh
-

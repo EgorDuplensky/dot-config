@@ -2,6 +2,10 @@
 
 # ./check-dependencies.sh
 
+# setup xfce4-terminal
+rm -f $HOME/.config/xfce4/terminal/terminalrc
+ln -sf $PWD/xfce4/terminalrc $HOME/.config/xfce4/terminal/terminalrc
+
 # setup Xorg
 rm -f $HOME/.xprofile
 ln -sf $PWD/xorg/xprofile $HOME/.xprofile
@@ -44,6 +48,9 @@ rm -f $HOME/.config/systemd/user/emacs.service
 ln -sf $PWD/systemd/emacs.service $HOME/.config/systemd/user/emacs.service
 rm -f $HOME/.config/systemd/user/slstatus.service
 ln -sf $PWD/systemd/slstatus.service $HOME/.config/systemd/user/slstatus.service
+# setup gdbinit
+mkdir -p $HOME/.config/gdb
+ln -sf $PWD/gdbinit $HOME/.gdbinit
 
 # # setup custom scripts
 ln -sf $PWD/scripts $HOME/.scripts
