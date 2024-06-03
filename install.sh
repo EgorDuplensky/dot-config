@@ -35,6 +35,11 @@ ln -sf $PWD/bash/fzf.bash $HOME/.config/bash/fzf.bash
 rm -f $HOME/.config/bash/fasd.bash
 ln -sf $PWD/bash/fasd.bash $HOME/.config/bash/fasd.bash
 
+rm -f $HOME/.config/zsh/fzf.zsh
+ln -sf $PWD/zsh/fzf.zsh $HOME/.config/zsh/fzf.zsh
+rm -f $HOME/.config/zsh/fasd.zsh
+ln -sf $PWD/zsh/fasd.zsh $HOME/.config/zsh/fasd.zsh
+
 # setup Git
 mkdir -p $HOME/.config/git
 rm -f $HOME/.config/git/ignore

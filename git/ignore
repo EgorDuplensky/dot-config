@@ -1,11 +1,12 @@
- # generated files
+# generated files
 *.log
 graph.xml
 graph.bin
 tmp/
+backup/
 models/
 irs/
-.build_tmp
+install/
 # emacs stuff
 GPATH
 GRTAGS
@@ -52,3 +53,5 @@ cpu_dump*
 .dockerignore
 # tmp
 launch.json
+# python
+*.venv*

@@ -2,11 +2,11 @@
 
 # shellcheck disable=SC1090
 
-[ -d /usr/share/fzf ] && for f in /usr/share/fzf/*.bash; do
+[ -d /usr/share/fzf ] && for f in /usr/share/fzf/*.zsh; do
     source "${f}"
 done
 
-[ -d /usr/share/doc/fzf/examples ] && for f in /usr/share/doc/fzf/examples/*.bash; do
+[ -d /usr/share/doc/fzf/examples ] && for f in /usr/share/doc/fzf/examples/*.zsh; do
     source "${f}"
 done
 

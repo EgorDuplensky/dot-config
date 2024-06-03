@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090,SC2155
 # source environment specific configuration first
+[ -f "$HOME/.config/bash/oh-my-bash" ] && . "$HOME/.config/bash/oh-my-bash"
+
 [ -f "$HOME/.config/bash/.bashrc_host_specific" ] && . "$HOME/.config/bash/.bashrc_host_specific"
 
 # enter the context
@@ -14,7 +16,7 @@ if [[ ! "$PATH" == *${HOME}/.scripts* ]]; then
   export PATH="${PATH:+${PATH}:}${HOME}/.scripts"
 fi
 
-shopt -s direxpand
+# shopt -s direxpand
 
 [ -f /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 
@@ -98,8 +100,6 @@ done
 [ -f "$HOME/.config/bash/.bash_secret" ] && source "$HOME/.config/bash/.bash_secret"
 # fzf-fasd configuration
 [ -f "$HOME/.config/bash/fasd.bash" ] && source "$HOME/.config/bash/fasd.bash"
-# git branch in prompt (Should be sources last to have proper error status)
-[ -f "$HOME/.config/bash/bash_prompt" ] && source "$HOME/.config/bash/bash_prompt"
 
 if [[ "$TERM" == "dumb" ]]; then
     PS1="> "
@@ -108,3 +108,9 @@ fi
 
 [ -f "$HOME/.bash_aliases" ] && . "$HOME/.bash_aliases"
 [ -f "$HOME/.bashrc_work" ] && . "$HOME/.bashrc_work"
+
+if [[ "$INSIDE_EMACS" == 'vterm' ]] \
+&& [[ -n ${EMACS_VTERM_PATH} ]] \
+&& [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh ]]; then
+    . ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh
+fi
