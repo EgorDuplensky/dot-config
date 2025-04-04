@@ -3,8 +3,8 @@
 
 . "$HOME/.profile"
 # status bar
-if command -v slstatus > /dev/null; then slstatus & fi
+# if command -v slstatus > /dev/null; then slstatus & fi
 # set random wallpapers
-if command -v rnd-wp > /dev/null; then rnd-wp; fi
+# if command -v rnd-wp > /dev/null; then rnd-wp; fi
 # composite manager
-if command -v picom > /dev/null; then picom -b; fi
+# if command -v picom > /dev/null; then picom -b; fi

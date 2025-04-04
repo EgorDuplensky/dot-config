@@ -29,8 +29,6 @@
     prompt = false
 [submodule]
 	recurse = true
-[pull]
-	rebase = true
 [include]
 	path = custom_config
 [filter "lfs"]

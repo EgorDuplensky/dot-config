@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1090,SC2155
 # source environment specific configuration first
-[ -f "$HOME/.config/bash/oh-my-bash" ] && . "$HOME/.config/bash/oh-my-bash"
 
-[ -f "$HOME/.config/bash/.bashrc_host_specific" ] && . "$HOME/.config/bash/.bashrc_host_specific"
+[ -f ~/.config/bash/oh-my-bash ] && . ~/.config/bash/oh-my-bash
+# set +o noclobber
+
+[ -f ~/.config/bash/.bashrc_host_specific ] && . ~/.config/bash/.bashrc_host_specific
 
 # enter the context
-[ -f "$HOME/.config/bash/.context" ] && source "$HOME/.config/bash/.context"
+[ -f ~/.config/bash/.context ] && source ~/.config/bash/.context
 
 if [[ ! "$PATH" == ${HOME}/.local/bin* ]]; then
   export PATH="${PATH:+${PATH}:}${HOME}/.local/bin"
@@ -20,15 +22,20 @@ fi
 
 [ -f /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 
-[ -d "$HOME/.config/bash/bash_completion.d" ] && for f in "$HOME/.config/bash/bash_completion.d/"*; do
+[ -d ~/.config/bash/bash_completion.d ] && for f in ~/.config/bash/bash_completion.d/*; do
     source "${f}"
 done
 
 # custom functions
-[ -f "$HOME/.config/bash/functions.sh" ] && source "$HOME/.config/bash/functions.sh"
+[ -f ~/.config/bash/functions.sh ] && source ~/.config/bash/functions.sh
 
-export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CURRENT_DESKTOP=GNOME
+
+export XDG_CONFIG_HOME=~/.config
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
+# remove stamps from history
+unset HISTTIMEFORMAT
+unset HIST_STAMPS
 # unlimited history
 HISTSIZE=
 HISTFILESIZE=
@@ -45,7 +52,7 @@ export LANGUAGE=en_US.UTF-8
 export EDITOR="emacsclient --no-wait"
 export VISUAL="emacsclient"
 
-export GOPATH=$HOME/go
+export GOPATH=~/go
 # hide dwm name from jvm. Otherwise jwm complains about window manager
 # and refuses to run from dwm.
 if command -v wmname > /dev/null; then wmname LG3D; fi
@@ -59,7 +66,7 @@ export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"; a="${a%_}"
 export LESS_TERMCAP_se="$(printf '%b' '[0m')"; a="${a%_}"
 export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"; a="${a%_}"
 export LESS_TERMCAP_ue="$(printf '%b' '[0m')"; a="${a%_}"
-[ -f "$HOME/.dircolors" ] && eval "$(dircolors $HOME/.dircolors)"
+[ -f ~/.dircolors ] && eval "$(dircolors ~/.dircolors)"
 
 # emacs26 need
 export ALTERNATE_EDITOR=""
@@ -82,35 +89,34 @@ alias file-explorer='xdg-open /'
 
 if command -v fdfind > /dev/null; then alias fd='fdfind'; fi
 
-# f1 for git status
-bind '"\eOP":"git status\n"'
 # Bind undo to just C-u instead of C-x C-u
 stty kill undef
 bind '"\C-u":undo'
 
-[ -d "$HOME/.config/bash/bash_aliases.d" ] && for f in "$HOME/.config/bash/bash_aliases.d/"*; do
+[ -d ~/.config/bash/bash_aliases.d ] && for f in ~/.config/bash/bash_aliases.d/*; do
     source "${f}"
 done
 
 # fzf configuration
-#[ -f "$HOME/git/ble.sh/out/ble.sh" ] && source "$HOME/git/ble.sh/out/ble.sh"
+#[ -f ~/git/ble.sh/out/ble.sh ] && source ~/git/ble.sh/out/ble.sh
 # fzf configuration
-[ -f "$HOME/.config/bash/fzf.bash" ] && source "$HOME/.config/bash/fzf.bash"
+[ -f ~/.config/bash/fzf.bash ] && source ~/.config/bash/fzf.bash
 # this is a secret
-[ -f "$HOME/.config/bash/.bash_secret" ] && source "$HOME/.config/bash/.bash_secret"
+[ -f ~/.config/bash/.bash_secret ] && source ~/.config/bash/.bash_secret
 # fzf-fasd configuration
-[ -f "$HOME/.config/bash/fasd.bash" ] && source "$HOME/.config/bash/fasd.bash"
+# [ -f ~/.config/bash/fasd.bash ] && source ~/.config/bash/fasd.bash
 
 if [[ "$TERM" == "dumb" ]]; then
     PS1="> "
     PROMPT_COMMAND=""
 fi
 
-[ -f "$HOME/.bash_aliases" ] && . "$HOME/.bash_aliases"
-[ -f "$HOME/.bashrc_work" ] && . "$HOME/.bashrc_work"
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+[ -f ~/.bashrc_work ] && . ~/.bashrc_work
 
 if [[ "$INSIDE_EMACS" == 'vterm' ]] \
 && [[ -n ${EMACS_VTERM_PATH} ]] \
 && [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh ]]; then
-    . ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh
+    echo "Configuring vterm for Emacs..."
+    . "${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh"
 fi

@@ -1,0 +1,48 @@
+#!/bin/env bash
+
+usage() {
+    echo "Options:
+    -f | --font     <font>      Sets the font
+    -h | --help                 Prints this help message"
+    exit $1
+}
+
+unset dmenu_args
+while [[ $# > 0 ]]; do
+    opt="$1"
+    shift
+
+    case $opt in
+        -f|--font)
+            [[ $# > 0 ]] || usage 1
+            dmenu_args=( -fn "$1" "${dmenu_args[@]}" )
+            shift
+            ;;
+        -h|--help)
+            usage 0
+            ;;
+        *)
+            usage 1
+            ;;
+    esac
+done
+
+# Date format, for use as the prompt.
+date=$(date +"%a %d. %b %R")
+
+# dmenu cannot display more than 30 lines, to avoid screen clutter. Only relevant if you have more than 30 windows open.
+height=$(wmctrl -l | wc -l)
+if [[ $height -gt 30 ]]
+	then heightfit=30
+	else heightfit=$height
+fi
+heightfit=8
+
+dmenu_args=( -i -F -c -l "$heightfit" -bw 3 "${dmenu_args[@]}" )
+# dmenu_cmd="dmenu ${dmenu_args}"
+
+dmenu_cmd="rofi -dmenu -l 8 -i"
+
+num=$(wmctrl -lx | sed -r 's#.+ .+ .+\.(.+).+eduplens-DESK (.+)#\1;\2#' | column -s';' -t | nl -w 1 -s "   " | ${dmenu_cmd} | awk '{print $1}')
+[[ -z "$num" ]] && exit
+wmctrl -l | sed -n "$num p" | awk '{print $1}' | xargs wmctrl -i -a

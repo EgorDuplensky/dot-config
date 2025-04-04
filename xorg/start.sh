@@ -25,5 +25,8 @@ if command -v picom > /dev/null; then picom -b; fi
 # status bar
 if command -v dwmbar > /dev/null; then dwmbar & fi
 
-# Log stderror to a file
-dwm 2>> ~/.config/xorg/log
+# ensure restart without logging out
+while true; do
+    # Log stderror to a file
+    dwm 2>> ~/.config/xorg/log
+done

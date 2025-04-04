@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+source /etc/profile.d/bash_completion.sh
+
+ble-import -d integration/fzf-completion
+ble-import -d integration/fzf-key-bindings

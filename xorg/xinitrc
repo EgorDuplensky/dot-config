@@ -40,7 +40,7 @@ xset fp rehash
 # lower keyboard repeat delay and increase speed
 xset r rate 220 40
 
-setxkbmap -model pc104 -layout ru,us -variant qwerty -option grp:alt_shift_toggle
+setxkbmap -model pc104 -layout ru,us -variant qwerty -option grp:alt_space_toggle
 
 ulimit -c unlimited
 ulimit -n 15000

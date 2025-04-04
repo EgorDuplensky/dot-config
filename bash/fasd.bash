@@ -22,7 +22,7 @@ export _FASD_DATA=$HOME/.cache/fasd/.fasd
 
 function fasd_fzf() {
     local dir
-    dir="$(fasd -sdlR 2>&1 | fzf +s | sed 's/^[0-9,.]* *//')"
+    dir="$(fasd -dlR 2>&1 | fzf +s)"
     printf 'cd %q' "$dir"
 }
 

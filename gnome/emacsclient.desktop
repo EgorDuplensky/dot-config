@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Emacs Client
+Exec=emacsclient -c %F
+Terminal=false
+Type=Application
+MimeType=text/plain;
+Icon=emacs

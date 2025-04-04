@@ -5,6 +5,8 @@ set disassembly-flavor intel
 set max-completions 10
 set startup-quietly on
 set breakpoint pending on
+set debuginfod enabled on
+set print address off
 
 # Aliases
 alias -a ct = catch throw
