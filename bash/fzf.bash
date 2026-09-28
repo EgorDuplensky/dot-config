@@ -21,9 +21,10 @@ eval "$(fzf --bash)"
 # done
 
 # Fuzzy matching (fzf)
-export FZF_DEFAULT_OPTS="--no-scrollbar --height 15 --marker='' --pointer='' --scroll-off=5 --layout=reverse --no-mouse --info=hidden --prompt='> ' --border --color='pointer:#3f3f3f,marker:#3f3f3f,border:#dfaf8f,prompt:#9ece9e'"
+export FZF_DEFAULT_OPTS="--no-scrollbar --height 15 --marker='' --pointer='' --scroll-off=5 --layout=reverse --no-mouse --info=hidden --prompt='> ' --border --color='pointer:#3f3f3f,marker:#3f3f3f,border:#dfaf8f,prompt:#9ece9e' --scheme=history"
 export FZF_ALT_C_OPTS="--preview 'ls -a --color {}' --color='preview-fg:#ffffff' --preview-window=right:70%"
-export FZF_CTRL_R_OPTS="--with-nth 2.."
+# export FZF_CTRL_R_OPTS="--with-nth 2.."
+# export FZF_CTRL_R_OPTS="--nth 2.."
 
 # fuzzy enter git repo in home
 fcd-git() {

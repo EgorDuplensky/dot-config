@@ -2,10 +2,34 @@
 # shellcheck disable=SC1090,SC2155
 # source environment specific configuration first
 
-[ -f ~/.config/bash/oh-my-bash ] && . ~/.config/bash/oh-my-bash
-# set +o noclobber
+is_interactive_shell=false
+if [[ $- == *i* ]]; then
+    is_interactive_shell=true
+fi
 
-[ -f ~/.config/bash/.bashrc_host_specific ] && . ~/.config/bash/.bashrc_host_specific
+# if interactive
+if $is_interactive_shell; then
+    bind '"\C-x\C-r": repeat'
+fi
+
+if [[ -f ~/.config/bash/oh-my-bash ]]; then
+    . ~/.config/bash/oh-my-bash
+else
+    # Default Ubuntu prompt
+    # set variable identifying the chroot you work in (used in the prompt below)
+    if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+        debian_chroot=$(cat /etc/debian_chroot)
+    fi
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # Prepend terminal title
+    case "$TERM" in
+        xterm*|rxvt*)
+            PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+            ;;
+    esac
+fi
+
+set +o noclobber
 
 # enter the context
 [ -f ~/.config/bash/.context ] && source ~/.config/bash/.context
@@ -16,6 +40,10 @@ fi
 
 if [[ ! "$PATH" == *${HOME}/.scripts* ]]; then
   export PATH="${PATH:+${PATH}:}${HOME}/.scripts"
+fi
+
+if [[ ! "$PATH" == ${HOME}/go/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}${HOME}/go/bin"
 fi
 
 # shopt -s direxpand
@@ -49,13 +77,18 @@ export LC_COLLATE=en_US.UTF-8
 export LC_MESSAGES=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
-export EDITOR="emacsclient --no-wait"
-export VISUAL="emacsclient"
+if command -v emacsclient > /dev/null; then
+    export EDITOR="emacsclient --no-wait"
+    export VISUAL="emacsclient"
+fi
 
 export GOPATH=~/go
-# hide dwm name from jvm. Otherwise jwm complains about window manager
-# and refuses to run from dwm.
-if command -v wmname > /dev/null; then wmname LG3D; fi
+
+if [[ is_interactive_shell == true ]]; then
+    # hide dwm name from jvm. Otherwise jwm complains about window manager
+    # and refuses to run from dwm.
+    if command -v wmname > /dev/null; then wmname LG3D; fi
+fi
 
 # less/man colors
 export LESS=-R
@@ -89,9 +122,11 @@ alias file-explorer='xdg-open /'
 
 if command -v fdfind > /dev/null; then alias fd='fdfind'; fi
 
-# Bind undo to just C-u instead of C-x C-u
-stty kill undef
-bind '"\C-u":undo'
+if $is_interactive_shell; then
+    # Bind undo to just C-u instead of C-x C-u
+    stty kill undef
+    bind '"\C-u":undo'
+fi
 
 [ -d ~/.config/bash/bash_aliases.d ] && for f in ~/.config/bash/bash_aliases.d/*; do
     source "${f}"
@@ -117,6 +152,26 @@ fi
 if [[ "$INSIDE_EMACS" == 'vterm' ]] \
 && [[ -n ${EMACS_VTERM_PATH} ]] \
 && [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh ]]; then
-    echo "Configuring vterm for Emacs..."
     . "${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh"
+    # oh-my-bash theme rebuilds PS1 from scratch each prompt, so the
+    # PS1 append in emacs-vterm-bash.sh gets overwritten.  Explicitly
+    # hook vterm_prompt_end via PROMPT_COMMAND instead.
+    PROMPT_COMMAND="vterm_prompt_end; ${PROMPT_COMMAND}"
 fi
+
+export PATH=/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Claude code
+if command -v claude > /dev/null; then
+    export ENABLE_LSP_TOOL=1
+    export CLAUDE_ENV_FILE="$HOME/.claude/env.sh"
+    export CLAUDE_CODE_DISABLE_TERMINAL_TITLE=1
+fi
+
+# _omb_util_add_prompt_command '_omb_set_title() { echo -ne "\033]0;${HOSTNAME}:${PWD/#$HOME/~}\007"; }'
+# _omb_util_add_prompt_command _omb_set_title

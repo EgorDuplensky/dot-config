@@ -1,6 +1,7 @@
 [ -d $HOME/.scripts ] && PATH="$PATH:$HOME/.scripts"
 [ -d $HOME/.local/bin ] && PATH="$PATH:$HOME/.local/bin"
 
+export XDG_CURRENT_DESKTOP=GNOME
 . "$HOME/.profile"
 # status bar
 # if command -v slstatus > /dev/null; then slstatus & fi

@@ -52,4 +52,5 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }"'echo -ne "\033]0;${HOSTNAM
 vterm_prompt_end(){
     vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
 }
+PROMPT_COMMAND="vterm_prompt_end; ${PROMPT_COMMAND}"
 PS1=$PS1'\[$(vterm_prompt_end)\]'

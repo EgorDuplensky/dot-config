@@ -21,6 +21,7 @@ compile_commands*.json*
 .clangd
 .clang-format
 .clang-tidy
+.clangd-static-index
 # gcov
 *.gcno
 *.gcda
@@ -55,3 +56,17 @@ cpu_dump*
 launch.json
 # python
 *.venv*
+# llvm and mlir
+*.ll
+*.mlir
+# claude
+.claude
+.mcp.json
+# rg
+.rgignore
+# rest
+.cmakelintrc
+.local
+# git worktree
+./worktree
+**/.claude/settings.local.json
